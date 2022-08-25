@@ -1,38 +1,42 @@
+/** @format */
+
 import React, { useContext, useEffect, useState } from "react";
 import "./index.scss";
 import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { Context } from './../../context/Context';
+import { Context } from "./../../context/Context";
 
 export default function Navbar(props) {
-  const context = useContext(Context)
-  const[logged, setLogged] = useState("")
-
-  useEffect(()=>{
-    setLogged(localStorage.getItem("logged") ? localStorage.getItem("logged") : "false")
-  },[logged])
-
-  const [visible, setVisible] = useState(false)
-  const[searchValue,setSearchValue] = useState('')
+  const context = useContext(Context);
+  const [logged, setLogged] = useState("");
 
   useEffect(() => {
-      window.onscroll = () => {
-          let currentScrollPos = window.pageYOffset;
-          setVisible(currentScrollPos > 300 ? true: false)
-      }
-  },[ setVisible])
+    setLogged(
+      localStorage.getItem("logged") ? localStorage.getItem("logged") : "false"
+    );
+  }, [logged]);
 
-  useEffect(()=>{
-    setSearchValue(searchValue)
-  },[searchValue, setSearchValue])
+  const [visible, setVisible] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  useEffect(() => {
+    window.onscroll = () => {
+      let currentScrollPos = window.pageYOffset;
+      setVisible(currentScrollPos > 300 ? true : false);
+    };
+  }, [setVisible]);
+
+  useEffect(() => {
+    setSearchValue(searchValue);
+  }, [searchValue, setSearchValue]);
 
   // console.log(JSON.parse(localStorage.getItem("cart-items")).length)
-  function logout(){
-    localStorage.setItem("logged", "false")
+  function logout() {
+    localStorage.setItem("logged", "false");
     // setLogged(localStorage.setItem("logged", "false"))
-    localStorage.removeItem("username")
-    localStorage.removeItem("role")
-}
+    localStorage.removeItem("username");
+    localStorage.removeItem("role");
+  }
 
   return (
     <div className="main-navbar">
@@ -71,7 +75,6 @@ export default function Navbar(props) {
               >
                 العربية
               </button>
-
             </div>
           </div>
         </div>
@@ -80,7 +83,9 @@ export default function Navbar(props) {
         className={
           props.compo === false
             ? "middle fw-bold p-0 fixed-top "
-            : visible ? "middle fw-bold p-0 fixed-top": "middle fw-bold p-0 "
+            : visible
+            ? "middle fw-bold p-0 fixed-top"
+            : "middle fw-bold p-0 "
         }
       >
         <nav
@@ -96,7 +101,12 @@ export default function Navbar(props) {
               to="/"
             >
               <div className="box">
-                <img src={process.env.PUBLIC_URL + "/images/logo/yodawy-logo-300x74.png"} />
+                <img
+                  src={
+                    process.env.PUBLIC_URL +
+                    "/images/logo/yodawy-logo-300x74.png"
+                  }
+                />
               </div>
             </Link>
             <button
@@ -116,7 +126,12 @@ export default function Navbar(props) {
             >
               <ul className="navbar-nav m-auto mb-2 mb-lg-0">
                 <li className="nav-item ">
-                  <NavLink onClick={()=> context.setFilterd(context.products)} className="nav-link" aria-current="page" to="/shop/1">
+                  <NavLink
+                    onClick={() => context.setFilterd(context.products)}
+                    className="nav-link"
+                    aria-current="page"
+                    to="/shop/1"
+                  >
                     shop
                   </NavLink>
                 </li>
@@ -146,45 +161,71 @@ export default function Navbar(props) {
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    to="/contact"
-                  >
+                  <NavLink className="nav-link" to="/contact">
                     contact
                   </NavLink>
                 </li>
                 <li className="nav-item fw-bolder">
-                  <NavLink
-                    className="nav-link"
-                    to="/cart"
-                  >
+                  <NavLink className="nav-link" to="/cart">
                     <i className="fas fa-shopping-cart "></i>
-                    <span style={{fontSize:"10px"}} className="badge bg-info rounded position-absolute">{localStorage.getItem("cart-items")? JSON.parse(localStorage.getItem("cart-items")).length : 0}</span>
+                    <span
+                      style={{ fontSize: "10px" }}
+                      className="badge bg-info rounded position-absolute"
+                    >
+                      {localStorage.getItem("cart-items")
+                        ? JSON.parse(localStorage.getItem("cart-items")).length
+                        : 0}
+                    </span>
                   </NavLink>
                 </li>
-                
-                {localStorage.getItem("username") ? 
-                <li className={props.compo == false ? "d-none" : "nav-item fw-bolder mx-3"}>
-                  <NavLink
-                    className="nav-link"
-                    to="/login" exact
+
+                {localStorage.getItem("username") ? (
+                  <li
+                    className={
+                      props.compo == false
+                        ? "d-none"
+                        : "nav-item fw-bolder mx-3"
+                    }
                   >
-                    <i className="fas fa-sign-out-alt "></i>
-                    <span style={{fontSize:"10px"}} className="badge bg-success rounded position-absolute">{localStorage.getItem("username")? localStorage.getItem("username") : ""}</span>
-                  </NavLink>
-                </li> : 
-                <li className={props.compo == false ? "d-none" : "nav-item fw-bolder mx-3"}>
-                  <NavLink
-                    className="nav-link"
-                    to="/login" exact
+                    <NavLink className="nav-link" to="/login" exact>
+                      <i className="fas fa-sign-out-alt "></i>
+                      <span
+                        style={{ fontSize: "10px" }}
+                        className="badge bg-success rounded position-absolute"
+                      >
+                        {localStorage.getItem("username")
+                          ? localStorage.getItem("username")
+                          : ""}
+                      </span>
+                    </NavLink>
+                  </li>
+                ) : (
+                  <li
+                    className={
+                      props.compo == false
+                        ? "d-none"
+                        : "nav-item fw-bolder mx-3"
+                    }
                   >
-                    <i className="fas fa-sign-out-alt "></i>
-                    <span style={{fontSize:"10px"}} className="badge bg-secondary rounded position-absolute">login</span>
-                  </NavLink>
-                </li>
-                }
+                    <NavLink className="nav-link" to="/login" exact>
+                      <i className="fas fa-sign-out-alt "></i>
+                      <span
+                        style={{ fontSize: "10px" }}
+                        className="badge bg-secondary rounded position-absolute"
+                      >
+                        login
+                      </span>
+                    </NavLink>
+                  </li>
+                )}
                 <button
-                  className={props.compo == true ? visible? "btn btn-light mx-5" : "d-block d-md-none" : "btn btn-light mx-2"}
+                  className={
+                    props.compo == true
+                      ? visible
+                        ? "btn btn-light mx-5"
+                        : "d-block d-md-none"
+                      : "btn btn-light mx-2"
+                  }
                   onClick={() => context.changeLang()}
                 >
                   العربية
@@ -200,11 +241,13 @@ export default function Navbar(props) {
             <div className="col-3 col-md-2">
               <div className="box  m-lg-4">
                 <Link to="/">
-                  <img src={process.env.PUBLIC_URL + "/images/logo/Yodawylogo.png"} />
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/logo/Yodawylogo.png"}
+                  />
                 </Link>
               </div>
             </div>
-            
+
             <div className="col-9 col-md-6 search-input ">
               <div className="input-group mb-0">
                 <input
@@ -214,24 +257,55 @@ export default function Navbar(props) {
                   aria-label="Recipient's username"
                   aria-describedby="basic-addon2"
                   value={searchValue}
-                  onChange={(e)=>setSearchValue(e.target.value)}
+                  onChange={(e) => setSearchValue(e.target.value)}
                 />
-                  <Link to={searchValue.trim()== ""?"" : '/shop'} onClick={() => context.setFilterd(context.products.filter(el=> 
-                    el.brand.toLowerCase().indexOf(searchValue.trim().toLowerCase()) != -1
-                    || el.categoryName.toLowerCase().indexOf(searchValue.trim().toLowerCase()) != -1
-                    || el.categoryBranchName.toLowerCase().indexOf(searchValue.trim().toLowerCase()) != -1
-                    || el.description.toLowerCase().indexOf(searchValue.trim().toLowerCase()) != -1
-                    || el.productName.toLowerCase().indexOf(searchValue.trim().toLowerCase()) != -1
-                    || el.brandAr.toLowerCase().indexOf(searchValue.trim().toLowerCase()) != -1
-                    || el.categoryNameAr.toLowerCase().indexOf(searchValue.trim().toLowerCase()) != -1
-                    || el.categoryBranchNameAr.toLowerCase().indexOf(searchValue.trim().toLowerCase()) != -1
-                    || el.descriptionAr.toLowerCase().indexOf(searchValue.trim().toLowerCase()) != -1
-                    || el.nameAr.toLowerCase().indexOf(searchValue.trim().toLowerCase()) != -1
-                    ))}>
-                <span className="input-group-text search-span en" id="basic-addon2">
+                <Link
+                  to={searchValue.trim() == "" ? "" : "/shop"}
+                  onClick={() =>
+                    context.setFilterd(
+                      context.products.filter(
+                        (el) =>
+                          el.brand
+                            .toLowerCase()
+                            .indexOf(searchValue.trim().toLowerCase()) != -1 ||
+                          el.categoryName
+                            .toLowerCase()
+                            .indexOf(searchValue.trim().toLowerCase()) != -1 ||
+                          el.categoryBranchName
+                            .toLowerCase()
+                            .indexOf(searchValue.trim().toLowerCase()) != -1 ||
+                          el.description
+                            .toLowerCase()
+                            .indexOf(searchValue.trim().toLowerCase()) != -1 ||
+                          el.productName
+                            .toLowerCase()
+                            .indexOf(searchValue.trim().toLowerCase()) != -1 ||
+                          el.brandAr
+                            .toLowerCase()
+                            .indexOf(searchValue.trim().toLowerCase()) != -1 ||
+                          el.categoryNameAr
+                            .toLowerCase()
+                            .indexOf(searchValue.trim().toLowerCase()) != -1 ||
+                          el.categoryBranchNameAr
+                            .toLowerCase()
+                            .indexOf(searchValue.trim().toLowerCase()) != -1 ||
+                          el.descriptionAr
+                            .toLowerCase()
+                            .indexOf(searchValue.trim().toLowerCase()) != -1 ||
+                          el.nameAr
+                            .toLowerCase()
+                            .indexOf(searchValue.trim().toLowerCase()) != -1
+                      )
+                    )
+                  }
+                >
+                  <span
+                    className="input-group-text search-span en"
+                    id="basic-addon2"
+                  >
                     <i className="fas fa-search"></i>
-                </span>
-                  </Link>
+                  </span>
+                </Link>
               </div>
             </div>
           </div>
