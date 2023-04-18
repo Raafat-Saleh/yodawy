@@ -13,7 +13,7 @@ import ForDoctors from "./pages/doctors/Doctors";
 import Contact from "./pages/contact/Contact";
 import ContactAr from "./pages/contact/ContactAr";
 import Shop from "./pages/shop/Shop";
-import ShopAr from "./pages/shop/ShopAr";
+import ShopAr from "./pages/shop/ShopAr"; 
 import Blog from "./pages/blog/Blog";
 import BlogAr from "./pages/blog/BlogsAr";
 import ForPharmaciesAr from "./pages/pharmacies/ForPharmaciesAr";
